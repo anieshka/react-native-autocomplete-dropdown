@@ -15,6 +15,7 @@ import { Dropdown } from './Dropdown'
 import { moderateScale, ScaledSheet } from 'react-native-size-matters'
 import { NothingFound } from './NothingFound'
 import { RightButton } from './RightButton'
+import { LeftButton } from './LeftButton'
 import { ScrollViewListItem } from './ScrollViewListItem'
 
 export const AutocompleteDropdown = memo(
@@ -272,6 +273,19 @@ export const AutocompleteDropdown = memo(
           ref={containerRef}
           onLayout={_ => { }}
           style={[styles.inputContainerStyle, props.inputContainerStyle]}>
+            <LeftButton
+            isOpened={isOpened}
+            inputHeight={inputHeight}
+            onClearPress={onClearPress}
+            onChevronPress={onChevronPress}
+            showChevronLeft={props.showChevronLeft ?? true}
+            showClear={props.showClear ?? !!searchText}
+            loading={props.loading}
+            buttonsContainerStyle={props.rightButtonsContainerStyle}
+            ChevronIconLeftComponent={props.ChevronIconLeftComponent}
+            ClearIconComponent={props.ClearIconComponent}
+          />
+
           <InputComponent
             ref={inputRef}
             value={searchText}
@@ -326,7 +340,9 @@ AutocompleteDropdown.propTypes = {
   loading: PropTypes.bool,
   useFilter: PropTypes.bool,
   showClear: PropTypes.bool,
+  showClearLeft: PropTypes.bool,
   showChevron: PropTypes.bool,
+  showChevronLeft: PropTypes.bool,
   closeOnBlur: PropTypes.bool,
   closeOnSubmit: PropTypes.bool,
   clearOnFocus: PropTypes.bool,
@@ -349,7 +365,9 @@ AutocompleteDropdown.propTypes = {
   suggestionsListContainerStyle: PropTypes.object,
   suggestionsListTextStyle: PropTypes.object,
   ChevronIconComponent: PropTypes.element,
+  ChevronIconLeftComponent: PropTypes.element,
   ClearIconComponent: PropTypes.element,
+  ClearIconLeftComponent: PropTypes.element,
   ScrollViewComponent: PropTypes.elementType,
   EmptyResultComponent: PropTypes.element,
   emptyResultText: PropTypes.string,
