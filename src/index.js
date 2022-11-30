@@ -161,13 +161,16 @@ export const AutocompleteDropdown = memo(
         return
       }
 
-      const lowerSearchText = searchText.toLowerCase()
+      /*** REMOVE COMMENT WHEN YOU WANT TO ONLY SHOW THE SELECTED ITEM UPON SELECTION ***\ 
 
-      const newSet = props.dataSet.filter(
-        item => typeof item.title === 'string' && item.title.toLowerCase().indexOf(lowerSearchText) !== -1
-      )
+      // const lowerSearchText = searchText.toLowerCase()
+      // const newSet = props.dataSet.filter(
+      //   item => typeof item.title === 'string' && item.title.toLowerCase().indexOf(lowerSearchText) !== -1
+      // )
+      // setDataSet(newSet)
 
-      setDataSet(newSet)
+      \**********************************************************************************/
+
     }, [searchText, props.dataSet, props.useFilter])
 
     const renderItem = useCallback(
