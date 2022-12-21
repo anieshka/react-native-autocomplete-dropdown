@@ -32,6 +32,7 @@ export const AutocompleteDropdown = memo(
     const suggestionsListMaxHeight = props.suggestionsListMaxHeight ?? moderateScale(200, 0.2)
     const position = props.position ?? 'absolute'
     const bottomOffset = props.bottomOffset ?? 0
+    const enableInput = props.enableInput ?? true
     const InputComponent = props.InputComponent ?? TextInput
 
     useLayoutEffect(() => {
@@ -182,6 +183,8 @@ export const AutocompleteDropdown = memo(
 
         return (
           <ScrollViewListItem
+            enableInput={enableInput}
+            selected={selectedItem?.title}
             key={item.id}
             title={item.title}
             highlight={searchText}
@@ -288,7 +291,6 @@ export const AutocompleteDropdown = memo(
             ChevronIconLeftComponent={props.ChevronIconLeftComponent}
             ClearIconComponent={props.ClearIconComponent}
           />
-
           <InputComponent
             ref={inputRef}
             value={searchText}
@@ -298,6 +300,7 @@ export const AutocompleteDropdown = memo(
             onFocus={onFocus}
             onSubmitEditing={onSubmit}
             placeholderTextColor="#d0d4dc"
+            editable={enableInput}
             {...props.textInputProps}
             style={{
               ...styles.Input,

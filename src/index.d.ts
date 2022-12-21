@@ -34,6 +34,7 @@ interface AutocompleteDropdownProps {
   closeOnBlur?: boolean;
   closeOnSubmit?: boolean;
   clearOnFocus?: boolean;
+  enableInput?: boolean;
   debounce?: number;
   direction?: 'down' | 'up';
   position?: 'absolute' | 'relative';

@@ -1,10 +1,12 @@
+import { any } from 'bluebird';
 import React, { memo, useMemo, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export const ScrollViewListItem = memo(({ highlight, title, style, onPress, numberOfLines = 2 }) => {
+export const ScrollViewListItem = memo(({ selected, highlight, title, style, onPress, numberOfLines = 2, enableInput }) => {
     
-    const [highlightState, setHighlightState] = useState();  
-    console.log("%c Line:7 🥪 highlightState", "color:#f5ce50", highlightState);
+    const [selectedContainer, setSelectedContainer] = useState()
+    const [selectedText, setSelectedText] = useState()
+
     const styles = StyleSheet.create({
       container: {
         padding: 15,
@@ -14,6 +16,7 @@ export const ScrollViewListItem = memo(({ highlight, title, style, onPress, numb
         justifyContent: 'flex-start',
         flexWrap: 'nowrap',
         width: '100%',
+        backgroundColor: 'white'
       },
       text: {
         color: '#333',
@@ -21,10 +24,10 @@ export const ScrollViewListItem = memo(({ highlight, title, style, onPress, numb
         flexGrow: 1,
         flexShrink: 0
       },
-      highlightContainerCls: {
+      selectedtContainerCls: {
         backgroundColor: '#47a4d8',
       },
-      highlightTextCls: {
+      selectedtTextCls: {
         fontWeight: '700', 
         color: 'white' ,
       },
@@ -41,9 +44,13 @@ export const ScrollViewListItem = memo(({ highlight, title, style, onPress, numb
       if (substrIndex !== -1) {
         titleStart = title.slice(0, substrIndex)
         titleHighlighted = title.slice(substrIndex, substrIndex + highlight.length)
-        setHighlightState(styles.highlightContainerCls)
         titleEnd = title.slice(substrIndex + highlight.length)
       }
+    }
+
+    if(selected === title){
+      setSelectedContainer(styles.selectedtContainerCls)
+      setSelectedText(styles.selectedtTextCls)
     }
 
     return { titleHighlighted, titleStart, titleEnd }
@@ -51,12 +58,12 @@ export const ScrollViewListItem = memo(({ highlight, title, style, onPress, numb
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, highlightState]}>
+      <View style={[styles.container, selectedContainer]}>
         <Text numberOfLines={numberOfLines}>
           <Text numberOfLines={1} style={{ ...styles.text, ...style }}>
             {titleParts.titleStart}
           </Text>
-          <Text numberOfLines={1} style={[{ ...styles.text, ...style }, styles.highlightTextCls]}>
+          <Text numberOfLines={1} style={[{ ...styles.text, ...style }, selectedText]}>
             {titleParts.titleHighlighted}
           </Text>
           <Text numberOfLines={1} style={{ ...styles.text, ...style }}>
