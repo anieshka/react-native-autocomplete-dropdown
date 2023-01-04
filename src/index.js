@@ -23,6 +23,8 @@ export const AutocompleteDropdown = memo(
     const inputRef = useRef(null)
     const containerRef = useRef(null)
     const [selectedItem, setSelectedItem] = useState(null)
+    const [selectedItemBgColor, setSelectedItemBgColor] = useState('')
+    const [selectedItemTextColor, setSelectedItemTextColor] = useState('')
     const [direction, setDirection] = useState(props.direction ?? 'down')
     const [isOpened, setIsOpened] = useState(false)
     const [searchText, setSearchText] = useState('')
@@ -33,6 +35,8 @@ export const AutocompleteDropdown = memo(
     const position = props.position ?? 'absolute'
     const bottomOffset = props.bottomOffset ?? 0
     const enableInput = props.enableInput ?? true
+    const dropdownPlaceholder = props.dropdownPlaceholder ?? ''
+    const dropdownPlaceholderColor = props.dropdownPlaceholderColor ?? '#d0d4dc'
     const InputComponent = props.InputComponent ?? TextInput
 
     useLayoutEffect(() => {
@@ -102,7 +106,10 @@ export const AutocompleteDropdown = memo(
 
     const _onSelectItem = useCallback(item => {
       setSelectedItem(item)
+      setSelectedItemBgColor(props.selectedBgColor)
+      setSelectedItemTextColor(props.selectedTextColor)
       inputRef.current.blur()
+      setDataSet(props.dataSet)
       setIsOpened(false)
     }, [])
 
@@ -162,15 +169,16 @@ export const AutocompleteDropdown = memo(
         return
       }
 
-      /*** REMOVE COMMENT WHEN YOU WANT TO ONLY SHOW THE SELECTED ITEM UPON SELECTION ***\ 
+      // /*** REMOVE COMMENT WHEN YOU WANT TO ONLY SHOW THE SELECTED ITEM UPON SELECTION ***\ 
 
       // const lowerSearchText = searchText.toLowerCase()
       // const newSet = props.dataSet.filter(
       //   item => typeof item.title === 'string' && item.title.toLowerCase().indexOf(lowerSearchText) !== -1
       // )
+      // console.log('newSet', newSet)
       // setDataSet(newSet)
 
-      \**********************************************************************************/
+      // \**********************************************************************************/
 
     }, [searchText, props.dataSet, props.useFilter])
 
@@ -184,6 +192,8 @@ export const AutocompleteDropdown = memo(
         return (
           <ScrollViewListItem
             enableInput={enableInput}
+            selectedItemBgColor={selectedItemBgColor}
+            selectedItemTextColor={selectedItemTextColor}
             selected={selectedItem?.title}
             key={item.id}
             title={item.title}
@@ -219,9 +229,33 @@ export const AutocompleteDropdown = memo(
       [props.onChangeText]
     )
 
+    // const onChangeText = useCallback(text => {
+    //   setSearchText(text)
+    //   debouncedEvent(text)
+    // }, [debouncedEvent])
+
     const onChangeText = useCallback(text => {
       setSearchText(text)
       debouncedEvent(text)
+
+      if (!searchText.length) {
+        setDataSet(props.dataSet)
+        return
+      }
+
+      if (!Array.isArray(props.dataSet) || props.useFilter === false) {
+        return
+      }
+
+      // /*** FILTER OUT LIST FOR SUGGESTIVE STYLE ***\ 
+
+      const lowerSearchText = searchText.toLowerCase()
+      const newSet = props.dataSet.filter(
+        item => typeof item.title === 'string' && item.title.toLowerCase().indexOf(lowerSearchText) !== -1
+        )
+      setDataSet(newSet)
+
+      // \**********************************************************************************/
     }, [debouncedEvent])
 
     const onChevronPress = useCallback(() => {
@@ -299,7 +333,8 @@ export const AutocompleteDropdown = memo(
             onBlur={onBlur}
             onFocus={onFocus}
             onSubmitEditing={onSubmit}
-            placeholderTextColor="#d0d4dc"
+            placeholderTextColor={dropdownPlaceholderColor}
+            placeholder={dropdownPlaceholder}
             editable={enableInput}
             {...props.textInputProps}
             style={{
@@ -377,7 +412,10 @@ AutocompleteDropdown.propTypes = {
   ScrollViewComponent: PropTypes.elementType,
   EmptyResultComponent: PropTypes.element,
   emptyResultText: PropTypes.string,
-  flatListProps: PropTypes.object
+  flatListProps: PropTypes.object,
+  // custom props
+  dropdownPlaceholder: PropTypes.string,
+  dropdownPlaceholderColor: PropTypes.string,
 }
 
 const styles = ScaledSheet.create({
