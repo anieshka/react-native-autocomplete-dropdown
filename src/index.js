@@ -106,8 +106,8 @@ export const AutocompleteDropdown = memo(
 
     const _onSelectItem = useCallback(item => {
       setSelectedItem(item)
-      setSelectedItemBgColor(props.selectedBgColor)
-      setSelectedItemTextColor(props.selectedTextColor)
+      setSelectedItemBgColor(props.selectedBgColor || '#359AD4')
+      setSelectedItemTextColor(props.selectedTextColor || 'white')
       inputRef.current.blur()
       setDataSet(props.dataSet)
       setIsOpened(false)
