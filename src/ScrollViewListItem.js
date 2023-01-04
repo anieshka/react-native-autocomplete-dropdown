@@ -2,8 +2,16 @@ import { any } from 'bluebird';
 import React, { memo, useMemo, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export const ScrollViewListItem = memo(({ selected, highlight, title, style, onPress, numberOfLines = 2, enableInput }) => {
-    
+export const ScrollViewListItem = memo(({ 
+  selected,
+  highlight,
+  title,
+  style,
+  onPress,
+  numberOfLines = 2,
+  selectedItemBgColor,
+  selectedItemTextColor
+}) => {    
     const [selectedContainer, setSelectedContainer] = useState()
     const [selectedText, setSelectedText] = useState()
 
@@ -25,11 +33,11 @@ export const ScrollViewListItem = memo(({ selected, highlight, title, style, onP
         flexShrink: 0
       },
       selectedtContainerCls: {
-        backgroundColor: '#47a4d8',
+        backgroundColor: selectedItemBgColor,
       },
       selectedtTextCls: {
         fontWeight: '700', 
-        color: 'white' ,
+        color: selectedItemTextColor ,
       },
     })
     const titleParts = useMemo(() => {

@@ -34,7 +34,6 @@ interface AutocompleteDropdownProps {
   closeOnBlur?: boolean;
   closeOnSubmit?: boolean;
   clearOnFocus?: boolean;
-  enableInput?: boolean;
   debounce?: number;
   direction?: 'down' | 'up';
   position?: 'absolute' | 'relative';
@@ -65,6 +64,12 @@ interface AutocompleteDropdownProps {
   EmptyResultComponent?: JSX.Element;
   emptyResultText?: string;
   flatListProps?: FlatListProps<any>
+  // custom props
+  enableInput?: boolean;
+  selectedBgColor?: string;
+  selectedTextColor?: string;
+  dropdownPlaceholder?: string;
+  dropdownPlaceholderColor?: string;
 }
 
 export const AutocompleteDropdown: FC<AutocompleteDropdownProps>;
