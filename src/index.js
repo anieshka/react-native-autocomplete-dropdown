@@ -355,7 +355,6 @@ export const AutocompleteDropdown = memo(
             ChevronIconComponent={props.ChevronIconComponent}
             ClearIconComponent={props.ClearIconComponent}
           />
-        </View>
         {isOpened && Array.isArray(dataSet) && (
           <Dropdown
             {...{
@@ -370,6 +369,7 @@ export const AutocompleteDropdown = memo(
             }}
           />
         )}
+        </View>
       </View>
     )
   })

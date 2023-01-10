@@ -30,10 +30,11 @@ export const Dropdown = memo(
           ...props.suggestionsListContainerStyle
         }}>
         <FlatList
-          keyboardDismissMode="on-drag"
+          // keyboardDismissMode="on-drag"
           keyboardShouldPersistTaps="handled"
           nestedScrollEnabled={true}
-          onScrollBeginDrag={Keyboard.dismiss}
+          scrollEnabled
+          // onScrollBeginDrag={Keyboard.dismiss}
           data={dataSet}
           style={{ maxHeight: suggestionsListMaxHeight }}
           renderItem={renderItem}
