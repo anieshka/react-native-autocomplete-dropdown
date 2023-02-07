@@ -91,7 +91,7 @@ export const AutocompleteDropdown = memo(
         props.onSelectItem(selectedItem)
       }
     }, [selectedItem])
-
+    
     useEffect(() => {
       if (typeof props.onOpenSuggestionsList === 'function') {
         props.onOpenSuggestionsList(isOpened)
@@ -238,24 +238,13 @@ export const AutocompleteDropdown = memo(
       setSearchText(text)
       debouncedEvent(text)
 
-      if (!searchText.length) {
-        setDataSet(props.dataSet)
-        return
-      }
-
-      if (!Array.isArray(props.dataSet) || props.useFilter === false) {
-        return
-      }
-
-      // /*** FILTER OUT LIST FOR SUGGESTIVE STYLE ***\ 
-
       const lowerSearchText = searchText.toLowerCase()
       const newSet = props.dataSet.filter(
         item => typeof item.title === 'string' && item.title.toLowerCase().indexOf(lowerSearchText) !== -1
-        )
+      )
+
       setDataSet(newSet)
 
-      // \**********************************************************************************/
     }, [debouncedEvent])
 
     const onChevronPress = useCallback(() => {
@@ -420,7 +409,7 @@ AutocompleteDropdown.propTypes = {
 
 const styles = ScaledSheet.create({
   container: {
-    marginVertical: 2
+    marginVertical: 2,
   },
   inputContainerStyle: {
     position: 'relative',
